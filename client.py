@@ -20,10 +20,15 @@ clientSocket.connect((serverName, serverPort))
 #Recieves lines of words
 linesInBytes = clientSocket.recv(1024)
 lines = linesInBytes.decode('utf-8')
+lines = lines.split("&newline&")
 linesString = ""
-for x in lines:
-    linesString += x + " "
-# linesString = linesString[0:len(linesString) - 1]
+for word in lines:
+    if word.find("_") != -1:
+        for x in word:
+            linesString += x + " "
+        # linesString = linesString[0:len(linesString) - 1]
+    else:
+        print(word)
 print(linesString)
 print('\n')
 print('Guess a letter: ')
@@ -33,7 +38,7 @@ while 1:
     # Get letter from user
     print('\n')
     letter = input()
-    print('\n')
+
     # Sends letter
     letterBytes = letter.encode('utf-8')
     clientSocket.send(letterBytes)
@@ -41,6 +46,16 @@ while 1:
     #Recieves newWord
     newWordInBytes = clientSocket.recv(1024)
     newWord = newWordInBytes.decode('utf-8')
+
+    if newWord == "You have won the game":
+        print("You Won!")
+        clientSocket.close()
+        exit()
+    elif newWord == "You have lost the game":
+        print("You Lost!")
+        clientSocket.close()
+        exit()
+
     newWords = newWord.split("&newline&")
 
     linesString = ""
@@ -52,6 +67,3 @@ while 1:
         else:
             print(word)
     print(linesString)
-    if linesString == "":
-        print("You Won!")
-        # clientSocket.close()

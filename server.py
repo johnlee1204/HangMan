@@ -75,15 +75,24 @@ newWord = word
 
 # Wait for connection and create a new socket
 # It blocks here waiting for connection
-connectionSocket, addr = serverSocket.accept()
+clients = []
+# connectionSocket, addr = serverSocket.accept()
+while len(clients) != 2:
+    connectionSocket, addr = serverSocket.accept()
+    clients.append(connectionSocket)
+    print("New Client! # " + str(len(clients) - 1))
+
 win = ' '
 #Sends lines of words
-linesInBytes = linesForString.encode('utf-8')
-connectionSocket.send(linesInBytes)
-
-lose = 0
 x = len(word)
 numberOfTries = int((1/x) * 30 + 3)
+
+print("First Player is Client: " + str(numberOfTries % 2))
+linesInBytes = linesForString.encode('utf-8')
+clients[numberOfTries % 2].send(linesInBytes)
+
+lose = 0
+
 
 while 1:
 
@@ -96,9 +105,9 @@ while 1:
     while 1:
 
         while win == False:
-            losee = 0
+            increment = True
             # Receives Letter
-            letter = connectionSocket.recv(1024)
+            letter = clients[numberOfTries % 2].recv(1024)
             letterString = letter.decode('utf-8')
             print(letterString)
 
@@ -106,13 +115,16 @@ while 1:
             messageForUser = ""
             if guessLetterResult == "duplicate guess":
                 messageForUser += "hey retard guess again&newline&"
-                numberOfTries += 1
+                increment = False
             elif guessLetterResult == "guess again":
                 messageForUser += "Guess Again!&newline&"
             elif guessLetterResult == "correct":
                 messageForUser += "Correct!&newline&"
-                numberOfTries += 1
+                increment = False
             #Sends newWord
+
+            if increment:
+                numberOfTries -= 1
 
             messageForUser += ("Guess a Character, you have " + str(numberOfTries) + " attempt(s) left. You have guessed: " + " ".join(guessedCharacters) + "&newline&")
 
@@ -130,13 +142,20 @@ while 1:
                 win = True
                 winGame = 'You have won the game'
                 winGameInBytes = winGame.encode('utf-8')
-                connectionSocket.send(winGameInBytes)
-                connectionSocket.close()
+
+                lostGame = 'You have lost the game'
+                lostGameInBytes = lostGame.encode('utf-8')
+
+
+                clients[numberOfTries % 2].send(winGameInBytes)
+                clients[(numberOfTries+1) % 2].send(lostGameInBytes)
+                clients[0].close()
+                clients[1].close()
+                exit()
             else:
                 print(messageForUser)
                 messageForUserBytes = messageForUser.encode('utf-8')
-                connectionSocket.send(messageForUserBytes)
-            numberOfTries -= 1
+                clients[numberOfTries % 2].send(messageForUserBytes)
 
         break
     break

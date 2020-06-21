@@ -4,7 +4,7 @@ import sys
 from socket import *
 
 if sys.argv.__len__() != 3:
-    serverName = 'localhost'
+    serverName = '192.168.1.15'
     serverPort = 5895
 # Get from command line
 else:
@@ -25,32 +25,33 @@ for x in lines:
     linesString += x + " "
 # linesString = linesString[0:len(linesString) - 1]
 print(linesString)
+print('\n')
+print('Guess a letter: ')
 
 while 1:
 
     # Get letter from user
     print('\n')
-    letter = input('Guess a letter: ')
-
+    letter = input()
+    print('\n')
     # Sends letter
     letterBytes = letter.encode('utf-8')
     clientSocket.send(letterBytes)
 
     #Recieves newWord
-    newWordInBytes = clientSocket.recv(len(linesInBytes))
+    newWordInBytes = clientSocket.recv(1024)
     newWord = newWordInBytes.decode('utf-8')
+    newWords = newWord.split("&newline&")
 
-    if newWord.find("_"):
-
-        linesString = ""
-        for x in newWord:
-            linesString += x + " "
-        # linesString = linesString[0:len(linesString) - 1]
-    else:
-        linesString = newWord
-
-    print(newWord)
-    if(linesString == 'You have won the game'):
-        print(newWord)
-        clientSocket.close()
-        break
+    linesString = ""
+    for word in newWords:
+        if word.find("_") != -1:
+            for x in word:
+                linesString += x + " "
+            # linesString = linesString[0:len(linesString) - 1]
+        else:
+            print(word)
+    print(linesString)
+    if linesString == "":
+        print("You Won!")
+        # clientSocket.close()

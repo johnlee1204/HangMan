@@ -17,7 +17,6 @@ def answerSection(word):
             answerSectionString += letter
         except ValueError:
             answerSectionString += "_"
-    print(answerSectionString)
     return answerSectionString.find("_")
 
 
@@ -29,10 +28,8 @@ def guessLetter(character):
         guessedCharacters.append(character)
 
     if word.find(character) == -1:
-        print("guess again")
+        return "guess again"
     else:
-        print("correct")
-        guessedCharacters.append(character)
         return "correct"
 
 def selectWordFromWordlist():
@@ -85,6 +82,9 @@ linesInBytes = linesForString.encode('utf-8')
 connectionSocket.send(linesInBytes)
 
 lose = 0
+x = len(word)
+numberOfTries = int((1/x) * 30 + 3)
+
 while 1:
 
 
@@ -105,9 +105,16 @@ while 1:
             guessLetterResult = guessLetter(letterString)
             messageForUser = ""
             if guessLetterResult == "duplicate guess":
-                messageForUser += "hey retard guess again"
-
+                messageForUser += "hey retard guess again&newline&"
+                numberOfTries += 1
+            elif guessLetterResult == "guess again":
+                messageForUser += "Guess Again!&newline&"
+            elif guessLetterResult == "correct":
+                messageForUser += "Correct!&newline&"
+                numberOfTries += 1
             #Sends newWord
+
+            messageForUser += ("Guess a Character, you have " + str(numberOfTries) + " attempt(s) left. You have guessed: " + " ".join(guessedCharacters) + "&newline&")
 
             answerSectionString = ""
             for letter in word:
@@ -126,8 +133,10 @@ while 1:
                 connectionSocket.send(winGameInBytes)
                 connectionSocket.close()
             else:
+                print(messageForUser)
                 messageForUserBytes = messageForUser.encode('utf-8')
                 connectionSocket.send(messageForUserBytes)
+            numberOfTries -= 1
 
         break
     break

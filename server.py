@@ -117,7 +117,9 @@ while 1:
                 messageForUser += "hey retard guess again&newline&"
                 increment = False
             elif guessLetterResult == "guess again":
-                messageForUser += "Guess Again!&newline&"
+                messageForUser += "Wrong, Next Player\'s turn!"
+                clients[numberOfTries % 2].send(messageForUser.encode('utf-8'))
+                messageForUser = ""
             elif guessLetterResult == "correct":
                 messageForUser += "Correct!&newline&"
                 increment = False

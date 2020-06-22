@@ -50,11 +50,17 @@ while 1:
     if newWord == "You have won the game":
         print("You Won!")
         clientSocket.close()
+        input("Press Enter to continue...")
         exit()
     elif newWord == "You have lost the game":
         print("You Lost!")
         clientSocket.close()
+        input("Press Enter to continue...")
         exit()
+    elif newWord.find("Wrong, Next Player\'s turn!") != -1:
+        print(newWord)
+        newWordInBytes = clientSocket.recv(1024)
+        newWord = newWordInBytes.decode('utf-8')
 
     newWords = newWord.split("&newline&")
 

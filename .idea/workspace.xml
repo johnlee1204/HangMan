@@ -10,7 +10,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a3232e47-dca6-4345-ba37-db5bd4331e2c" name="Default Changelist" comment="You can now play against the server">
+    <list default="true" id="a3232e47-dca6-4345-ba37-db5bd4331e2c" name="Default Changelist" comment="You can now play with two people">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client.py" beforeDir="false" afterPath="$PROJECT_DIR$/client.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/server.py" afterDir="false" />
@@ -38,6 +38,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -57,7 +58,14 @@
       <option name="project" value="LOCAL" />
       <updated>1592711822196</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="You can now play with two people">
+      <created>1592716407094</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1592716407094</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -70,19 +78,25 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="You can now play against the server" />
-    <option name="LAST_COMMIT_MESSAGE" value="You can now play against the server" />
+    <MESSAGE value="You can now play with two people" />
+    <option name="LAST_COMMIT_MESSAGE" value="You can now play with two people" />
   </component>
   <component name="WindowStateProjectService">
     <state x="1165" y="563" key="#Notifications" timestamp="1592680868421">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="1165" y="563" key="#Notifications/0.0.2560.1400/2560.418.1600.860@0.0.2560.1400" timestamp="1592680868421" />
-    <state x="872" y="433" key="Vcs.Push.Dialog.v2" timestamp="1592711823935">
+    <state x="1059" y="442" key="FileChooserDialogImpl" timestamp="1592794982076">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="872" y="433" key="Vcs.Push.Dialog.v2/0.0.2560.1400/2560.418.1600.860@0.0.2560.1400" timestamp="1592711823935" />
+    <state x="1059" y="442" key="FileChooserDialogImpl/0.0.2560.1400/2560.418.1600.860@0.0.2560.1400" timestamp="1592794982076" />
+    <state x="872" y="433" key="Vcs.Push.Dialog.v2" timestamp="1592716424335">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="872" y="433" key="Vcs.Push.Dialog.v2/0.0.2560.1400/2560.418.1600.860@0.0.2560.1400" timestamp="1592716424335" />
   </component>
 </project>

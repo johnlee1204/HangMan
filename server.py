@@ -65,7 +65,7 @@ print("The server is ready to receive")
 putWordsInWordlist()
 word = selectWordFromWordlist()
 word = word[0:len(word) - 1]
-print(word)
+# print(word)
 linesForString = ''
 #Prints out number of letters
 for x in word:
@@ -76,8 +76,8 @@ newWord = word
 # Wait for connection and create a new socket
 # It blocks here waiting for connection
 clients = []
-# connectionSocket, addr = serverSocket.accept()
-while len(clients) != 2:
+numberOfPlayers = int(input('Select Number Of Players!\n'))
+while len(clients) != numberOfPlayers:
     connectionSocket, addr = serverSocket.accept()
     clients.append(connectionSocket)
     print("New Client! # " + str(len(clients) - 1))
@@ -87,9 +87,9 @@ win = ' '
 x = len(word)
 numberOfTries = int((1/x) * 30 + 3)
 
-print("First Player is Client: " + str(numberOfTries % 2))
+print("First Player is Client: " + str(numberOfTries % numberOfPlayers))
 linesInBytes = linesForString.encode('utf-8')
-clients[numberOfTries % 2].send(linesInBytes)
+clients[numberOfTries % numberOfPlayers].send(linesInBytes)
 
 lose = 0
 
@@ -107,7 +107,7 @@ while 1:
         while win == False:
             increment = True
             # Receives Letter
-            letter = clients[numberOfTries % 2].recv(1024)
+            letter = clients[numberOfTries % numberOfPlayers].recv(1024)
             letterString = letter.decode('utf-8')
             print(letterString)
 
@@ -118,7 +118,7 @@ while 1:
                 increment = False
             elif guessLetterResult == "guess again":
                 messageForUser += "Wrong, Next Player\'s turn!"
-                clients[numberOfTries % 2].send(messageForUser.encode('utf-8'))
+                clients[numberOfTries % numberOfPlayers].send(messageForUser.encode('utf-8'))
                 messageForUser = ""
             elif guessLetterResult == "correct":
                 messageForUser += "Correct!&newline&"
@@ -149,15 +149,18 @@ while 1:
                 lostGameInBytes = lostGame.encode('utf-8')
 
 
-                clients[numberOfTries % 2].send(winGameInBytes)
-                clients[(numberOfTries+1) % 2].send(lostGameInBytes)
-                clients[0].close()
-                clients[1].close()
+                clients[numberOfTries % numberOfPlayers].send(winGameInBytes)
+                clients[numberOfTries % numberOfPlayers].close()
+                del clients[numberOfTries % numberOfPlayers]
+                for client in clients:
+                    client.send(lostGameInBytes)
+                    client.close()
+                    client.close()
                 exit()
             else:
                 print(messageForUser)
                 messageForUserBytes = messageForUser.encode('utf-8')
-                clients[numberOfTries % 2].send(messageForUserBytes)
+                clients[numberOfTries % numberOfPlayers].send(messageForUserBytes)
 
         break
     break

@@ -4,7 +4,7 @@ import sys
 from socket import *
 
 if sys.argv.__len__() != 3:
-    serverName = '192.168.1.15'
+    serverName = '98.193.242.82'
     serverPort = 5895
 # Get from command line
 else:
